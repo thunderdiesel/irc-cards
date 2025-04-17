@@ -1,7 +1,7 @@
 import random
 
 class Card:
-    def __init__(self, suit, rank):
+    def __init__(self, rank, suit):
         self.suit = suit
         self.rank = rank
 
@@ -13,7 +13,7 @@ class Deck:
         self.cards = self._create_deck()
 
     def _create_deck(self):
-        return [Card(suit, rank) for suit in self.suits for rank in self.ranks]
+        return [Card(rank, suit) for rank in self.ranks for suit in self.suits]
 
     def shuffle(self):
         random.shuffle(self.cards)
@@ -30,6 +30,7 @@ class Deck:
 class GameCrazyEights:
     def __init__(self,the_players,deck):
         self.num_players = len(the_players)
+        self.the_players = the_players
         self.deck = deck
         self.player_hands = self._deal_hands()
         #Put the rest of the deck in draw pile so just say 52.
@@ -37,27 +38,25 @@ class GameCrazyEights:
         #Empty discard pile
         self.discard_pile = []
         self.next_suit = None
+        self.player_turn = None
 
     def _deal_hands(self):
         num_cards = 5
-        hands = []
+        hands = {}
         if self.num_players == 2:
             num_cards = 7
-        for i in range(self.num_players):
-            hands.append(self.deck.deal(num_cards))
+        for a_player in range(self.the_players):
+            hands[a_player] = self.deck.deal(num_cards)
         return hands
 
-    def flip_first_card(self, eight_suit):
+    def flip_first_card(self):
         #Make sure this is the first move
         if len(self.discard_pile) > 0:
             raise Exception("Not the first move!")
         self.discard_pile.append(self.deck.deal(1))
-        if self.discard_pile[-1].rank == "8":
-            self.next_suit = eight_suit
-        else:
-            self.next_suit = self.discard_pile[-1].suit
+        self.next_suit = self.discard_pile[-1].suit
 
-    def discard_card(self, the_card):
+    def discard_card(self, a_player, the_card):
         #Make sure we have something to match
         if len(self.discard_pile) == 0:
             raise Exception("Nothing in discard!")
@@ -77,7 +76,7 @@ class GameCrazyEights:
     
         
 
-french_suits = ["♥", "♦", "♣", "♠"]
+french_suits = ["H", "D", "C", "S"]
 card_ranks_52_ace_high = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
 card_ranks_52_ace_low = ["A","2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
 
