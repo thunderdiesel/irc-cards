@@ -45,7 +45,7 @@ class GameCrazyEights:
         hands = {}
         if self.num_players == 2:
             num_cards = 7
-        for a_player in range(self.the_players):
+        for a_player in self.the_players:
             hands[a_player] = self.deck.deal(num_cards)
         return hands
 
@@ -53,7 +53,7 @@ class GameCrazyEights:
         #Make sure this is the first move
         if len(self.discard_pile) > 0:
             raise Exception("Not the first move!")
-        self.discard_pile.append(self.deck.deal(1))
+        self.discard_pile.append(self.draw_pile.pop())
         self.next_suit = self.discard_pile[-1].suit
 
     def discard_card(self, a_player, the_card):
@@ -68,11 +68,11 @@ class GameCrazyEights:
 
     def draw_card(self, the_player):
         #if the draw pile is empty refresh it from discard.
-        if len(self.deck) == 0:
-            self.deck = self.discard_pile[0:-1]
+        if len(self.draw_pile) == 0:
+            self.draw_pile = self.discard_pile[0:-1]
             del self.discard_pile[0:-1]
-            self.deck.shuffle()
-        self.player_hands[the_player].append(self.deck.deal(1))
+            self.draw_pile.shuffle()
+        self.player_hands[the_player].append(self.draw_pile.pop())
     
         
 
