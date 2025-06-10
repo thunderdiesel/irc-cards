@@ -81,7 +81,7 @@ def disc8s(bot,trigger):
         #Check if it's an 8 and clear next suit, otherwise set it
         #Maybe we should do this in the 8s game object?
         if bot.memory['eights_game'].discard_pile[-1].rank == '8':
-            bot.memory['eights_game'].next_suit = 
+            bot.memory['eights_game'].next_suit = None
             bot.say("Eights: First player must choose suit with .wild8s")
         else:
             bot.memory['eights_game'].next_suit = bot.memory['eights_game'].discard_pile[-1].suit
