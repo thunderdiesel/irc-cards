@@ -72,6 +72,7 @@ def disc8s(bot,trigger):
         bot.say("Eights: Card in hand!")
         bot.memory['eights_game'].player_hands[str(trigger.nick)]
         bot.memory['eights_game'].discard_card(str(trigger.nick), cmd_card)
+        hand_output = ''
         for the_card in bot.memory['eights_game'].player_hands[str(trigger.nick)]:
             hand_output += the_card.rank+the_card.suit+' '
         bot.say("Eights: "+hand_output, str(trigger.nick))
