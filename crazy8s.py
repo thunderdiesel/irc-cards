@@ -86,6 +86,13 @@ def disc8s(bot,trigger):
             bot.say("Eights: First player must choose suit with .wild8s")
         else:
             bot.memory['eights_game'].next_suit = bot.memory['eights_game'].discard_pile[-1].suit
+        #Set turn to next player
+        #I should use functions to set all these vars shouldn't I?
+        current_player_index = bot.memory['eights_game'].the_players.index(bot.memory['eights_game'].player_turn)
+        if current_player_index < bot.memory['eights_game'].num_players - 1:
+            bot.memory['eights_game'].player_turn = bot.memory['eights_game'].the_players[current_player_index + 1]
+        else:
+            bot.memory['eights_game'].player_turn = bot.memory['eights_game'].the_players[0]
     else:
         bot.say("Eights: Card not in hand!")
     
