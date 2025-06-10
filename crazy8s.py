@@ -65,9 +65,7 @@ def disc8s(bot,trigger):
     cmd_rank = trigger.groups()[2]
     cmd_suit = trigger.groups()[3]
     cmd_card = cards.Card(cmd_rank, cmd_suit)
-    print(trigger.nick)
-    print(bot.memory['eights_game'].player_hands[trigger.nick])
-    if cmd_card in bot.memory['eights_game'].player_hands[trigger.nick]:  
+    if cmd_card in bot.memory['eights_game'].player_hands[str(trigger.nick)]:  
         bot.say("Eights: Card in hand!")
     else:
         bot.say("Eights: Card not in hand!")

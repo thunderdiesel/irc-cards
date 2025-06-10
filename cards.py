@@ -4,6 +4,8 @@ class Card:
     def __init__(self, rank, suit):
         self.suit = suit
         self.rank = rank
+    def __eq__(self, other):
+        return (self.suit == other.suit) and (self.rank == other.rank)
 
 
 class Deck:
