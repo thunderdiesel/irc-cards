@@ -22,11 +22,15 @@ def start8s(bot, trigger):
         for the_card in bot.memory['eights_game'].player_hands[a_player]:
             hand_output += the_card.rank+the_card.suit+' '
         bot.say("Eights: "+hand_output, a_player)
+        #For debugging also put the hand in the main channel
+        bot.say("Eights: "+a_player+" "+hand_output)
     #Flip first card, if it's an eight, the first player must choose a suit.
     bot.memory['eights_game'].flip_first_card()
     bot.say("Eights: "+bot.memory['eights_game'].discard_pile[-1].rank+bot.memory['eights_game'].discard_pile[-1].suit)
+    #Clear next_suit if discard pile has an eight
     if bot.memory['eights_game'].discard_pile[-1].rank == "8":
         bot.say("Eights: First player must choose suit with .wild8s")
+        bot.memory['eights_game'].next_suit = None
     bot.memory['eights_game'].player_turn = players[0]
     bot.say("Eights: Next turn is for "+bot.memory['eights_game'].player_turn)
 
@@ -51,7 +55,6 @@ def wild8s(bot, trigger):
         bot.say("Eights: No wild card!")
         return
 
-# ToDo: input validation
 @plugin.command('disc8s')
 def disc8s(bot,trigger):
     if bot.memory['eights_game'] is None:
@@ -67,6 +70,21 @@ def disc8s(bot,trigger):
     cmd_card = cards.Card(cmd_rank, cmd_suit)
     if cmd_card in bot.memory['eights_game'].player_hands[str(trigger.nick)]:  
         bot.say("Eights: Card in hand!")
+        bot.memory['eights_game'].player_hands[str(trigger.nick)]
+        bot.memory['eights_game'].discard_card(str(trigger.nick), cmd_card)
+        for the_card in bot.memory['eights_game'].player_hands[str(trigger.nick)]:
+            hand_output += the_card.rank+the_card.suit+' '
+        bot.say("Eights: "+hand_output, str(trigger.nick))
+        #For debugging also put the hand in the main channel
+        bot.say("Eights: "+str(trigger.nick)+" "+hand_output)
+        bot.say("Eights: "+bot.memory['eights_game'].discard_pile[-1].rank+bot.memory['eights_game'].discard_pile[-1].suit)
+        #Check if it's an 8 and clear next suit, otherwise set it
+        #Maybe we should do this in the 8s game object?
+        if bot.memory['eights_game'].discard_pile[-1].rank == '8':
+            bot.memory['eights_game'].next_suit = 
+            bot.say("Eights: First player must choose suit with .wild8s")
+        else:
+            bot.memory['eights_game'].next_suit = bot.memory['eights_game'].discard_pile[-1].suit
     else:
         bot.say("Eights: Card not in hand!")
     

@@ -65,6 +65,7 @@ class GameCrazyEights:
         #Check Rules
         if (the_card.suit == self.next_suit) or (the_card.rank == self.discard_pile[-1].rank):
             self.discard_pile.append(the_card)
+            self.player_hands[a_player].remove(the_card)
         else:
             raise Exception("Illegal Move!")
 
