@@ -84,7 +84,6 @@ def disc8s(bot,trigger):
             bot.memory['eights_game'].player_turn = bot.memory['eights_game'].the_players[current_player_index + 1]
         else:
             bot.memory['eights_game'].player_turn = bot.memory['eights_game'].the_players[0]
-        bot.say("Eights: ")
         hand_output = ''
         for the_card in bot.memory['eights_game'].player_hands[bot.memory['eights_game'].player_turn]:
             hand_output += the_card.rank+the_card.suit+' '
@@ -92,6 +91,15 @@ def disc8s(bot,trigger):
         bot.say("Eights: Next turn is for "+bot.memory['eights_game'].player_turn)
     else:
         bot.say("Eights: Card not in hand!")
-    
 
-
+#Should add a check to see if you need to draw, although it harms you.
+@plugin.command('draw8s')
+def draw8s(bot,trigger):
+    if str(trigger.nick) != bot.memory['eights_game'].player_turn:
+        bot.say("Eights: It is not your turn!")
+        return
+    bot.memory['eights_game'].draw_card(str(trigger.nick))
+    hand_output = ''
+    for the_card in bot.memory['eights_game'].player_hands[bot.memory['eights_game'].player_turn]:
+        hand_output += the_card.rank+the_card.suit+' '
+    bot.say("Eights: "+bot.memory['eights_game'].player_turn+" "+hand_output)    
