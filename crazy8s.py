@@ -21,7 +21,7 @@ def start8s(bot, trigger):
         hand_output = ''
         for the_card in bot.memory['eights_game'].player_hands[a_player]:
             hand_output += the_card.rank+the_card.suit+' '
-        bot.say("Eights: "+hand_output, a_player)
+        #bot.say("Eights: "+hand_output, a_player)
         #For debugging also put the hand in the main channel
         bot.say("Eights: "+a_player+" "+hand_output)
     #Flip first card, if it's an eight, the first player must choose a suit.
@@ -72,10 +72,6 @@ def disc8s(bot,trigger):
         bot.say("Eights: Card in hand!")
         bot.memory['eights_game'].player_hands[str(trigger.nick)]
         bot.memory['eights_game'].discard_card(str(trigger.nick), cmd_card)
-        hand_output = ''
-        for the_card in bot.memory['eights_game'].player_hands[str(trigger.nick)]:
-            hand_output += the_card.rank+the_card.suit+' '
-        bot.say("Eights: "+hand_output, str(trigger.nick))
         #For debugging also put the hand in the main channel
         bot.say("Eights: "+str(trigger.nick)+" "+hand_output)
         bot.say("Eights: "+bot.memory['eights_game'].discard_pile[-1].rank+bot.memory['eights_game'].discard_pile[-1].suit)
@@ -93,6 +89,11 @@ def disc8s(bot,trigger):
             bot.memory['eights_game'].player_turn = bot.memory['eights_game'].the_players[current_player_index + 1]
         else:
             bot.memory['eights_game'].player_turn = bot.memory['eights_game'].the_players[0]
+        bot.say("Eights: ")
+        hand_output = ''
+        for the_card in bot.memory['eights_game'].player_hands[bot.memory['eights_game'].player_turn]:
+            hand_output += the_card.rank+the_card.suit+' '
+        bot.say("Eights: Next turn is for "+bot.memory['eights_game'].player_turn)
     else:
         bot.say("Eights: Card not in hand!")
     
