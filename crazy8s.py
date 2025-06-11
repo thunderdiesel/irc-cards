@@ -73,7 +73,6 @@ def disc8s(bot,trigger):
         bot.memory['eights_game'].player_hands[str(trigger.nick)]
         bot.memory['eights_game'].discard_card(str(trigger.nick), cmd_card)
         #For debugging also put the hand in the main channel
-        bot.say("Eights: "+str(trigger.nick)+" "+hand_output)
         bot.say("Eights: "+bot.memory['eights_game'].discard_pile[-1].rank+bot.memory['eights_game'].discard_pile[-1].suit)
         #Check if it's an 8 and clear next suit, otherwise set it
         #Maybe we should do this in the 8s game object?
@@ -93,6 +92,7 @@ def disc8s(bot,trigger):
         hand_output = ''
         for the_card in bot.memory['eights_game'].player_hands[bot.memory['eights_game'].player_turn]:
             hand_output += the_card.rank+the_card.suit+' '
+        bot.say("Eights: "+str(trigger.nick)+" "+hand_output)
         bot.say("Eights: Next turn is for "+bot.memory['eights_game'].player_turn)
     else:
         bot.say("Eights: Card not in hand!")
