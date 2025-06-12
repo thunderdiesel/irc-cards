@@ -8,3 +8,5 @@ FEATURES:
   - Handle running out of draw pile
 
 BUGS:
+  - 8s Illegal move message shows exception
+  - code continues in 8s discard function after "Suit not declared" test is true
