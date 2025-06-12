@@ -41,6 +41,7 @@ class GameCrazyEights:
         self.discard_pile = []
         self.next_suit = None
         self.player_turn = None
+        self.game_start = True
 
     def _deal_hands(self):
         num_cards = 5
