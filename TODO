@@ -1,0 +1,9 @@
+FEATURES:
+  - Getters and Setters
+  - Add colors
+  - case and space insensitive to card input
+  - Add suits?
+  - output function so I don't have to triplicate
+  - function to put together hand string so I don't have to repeat
+
+BUGS:
