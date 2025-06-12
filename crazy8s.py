@@ -79,6 +79,9 @@ def disc8s(bot,trigger):
         bot.say("Eights: Card in hand!")
         bot.memory['eights_game'].discard_card(str(trigger.nick), cmd_card)
         bot.memory['eights_game'].game_start = False
+        if len(bot.memory['eights_game'].player_hands[str(trigger.nick)]) == 0:
+            bot.say(str(trigger.nick)+" has won!")
+            del bot.memory['eights_game']
         #For debugging also put the hand in the main channel
         bot.say("Eights: "+bot.memory['eights_game'].discard_pile[-1].rank+bot.memory['eights_game'].discard_pile[-1].suit)
         #Check if it's an 8 (next_suit will have been cleared) and inform players. If not, advance turn.
