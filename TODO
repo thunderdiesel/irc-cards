@@ -5,5 +5,6 @@ FEATURES:
   - Add suits?
   - output function so I don't have to triplicate
   - function to put together hand string so I don't have to repeat
+  - Handle running out of draw pile
 
 BUGS:

@@ -22,7 +22,7 @@ def start8s(bot, trigger):
         hand_output = ''
         for the_card in bot.memory['eights_game'].player_hands[a_player]:
             hand_output += the_card.rank+the_card.suit+' '
-        bot.say("Eights: "+hand_output, a_player)
+        bot.say("Eights: "+a_player+" "+hand_output, a_player)
         #For debugging also put the hand in the log
         print("Eights: "+a_player+" "+hand_output)
     #Flip first card, if it's an eight, the first player must choose a suit.
@@ -97,6 +97,10 @@ def disc8s(bot,trigger):
         print("Eights: Card in hand!")
         bot.memory['eights_game'].discard_card(str(trigger.nick), cmd_card)
         bot.memory['eights_game'].game_start = False
+        bot.say("Eights: "+bot.memory['eights_game'].discard_pile[-1].rank+bot.memory['eights_game'].discard_pile[-1].suit, "#card-bot")
+        print("Eights: "+bot.memory['eights_game'].discard_pile[-1].rank+bot.memory['eights_game'].discard_pile[-1].suit)
+        for a_player in bot.memory['eights_game'].the_players:
+            bot.say("Eights: "+bot.memory['eights_game'].discard_pile[-1].rank+bot.memory['eights_game'].discard_pile[-1].suit, a_player)
         if len(bot.memory['eights_game'].player_hands[str(trigger.nick)]) == 0:
             bot.say(str(trigger.nick)+" has won!", "#card-bot")
             for a_player in bot.memory['eights_game'].the_players:
@@ -104,11 +108,6 @@ def disc8s(bot,trigger):
             print(str(trigger.nick)+" has won!")
             del bot.memory['eights_game']
             return
-        #For debugging also put the hand in the main channel
-        bot.say("Eights: "+bot.memory['eights_game'].discard_pile[-1].rank+bot.memory['eights_game'].discard_pile[-1].suit, "#card-bot")
-        print("Eights: "+bot.memory['eights_game'].discard_pile[-1].rank+bot.memory['eights_game'].discard_pile[-1].suit)
-        for a_player in bot.memory['eights_game'].the_players:
-            bot.say("Eights: "+bot.memory['eights_game'].discard_pile[-1].rank+bot.memory['eights_game'].discard_pile[-1].suit, a_player)
         #Check if it's an 8 (next_suit will have been cleared) and inform players. If not, advance turn.
         if bot.memory['eights_game'].next_suit is None:
             bot.say("Eights: Current player must choose suit with .wild8s", "#card-bot")
